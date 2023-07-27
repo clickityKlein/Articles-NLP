@@ -52,10 +52,7 @@ def load_data(articles_filepath = 'data/articles_reduced.csv'):
     OUTPUT:
         - df: DataFrame of the articles
     '''
-    df1 = pd.read_csv(articles_filepaths[0])
-    df2 = pd.read_csv(articles_filepaths[1])
-    df3 = pd.read_csv(articles_filepaths[2])
-    df = pd.concat([df1, df2, df3])
+    df = pd.read_csv(articles_filepath)
     
     return df
 
@@ -111,7 +108,7 @@ def clean_data(df):
         - df: DataFrame of cleaned data
     '''
     # drop unnecessary columns
-    df.drop(['Unnamed: 0', 'id', 'author', 'url', 'year', 'month'],
+    df.drop(['Unnamed: 0', 'Unnamed: 0.1', 'id', 'author', 'url', 'year', 'month'],
             axis = 1, inplace = True)
     
     # set date column as datetime type variable
@@ -237,22 +234,105 @@ def build_model_double_proc():
 
 # random forest classifier model build
 def build_model_forest():
+    # pipeline
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
-        ('clf', MultiOutputClassifier(RandomForestClassifier()))
+        ('clf', RandomForestClassifier())
         ])
     
     # parameters
     parameters = {
-        'clf__estimator__criterion': ['gini', 'entropy', 'log_Loss'],
-        'clf__estimator__n_estimators': [50, 100, 200]
+        'clf__estimator__n_estimators': [5]
         }
     
     # optimize
-    cv = GridSearchCV(pipeline, param_grid=parameters, n_jobs=-1, verbose=2, cv=2)
+    cv = GridSearchCV(pipeline, param_grid=parameters, n_jobs=-1, verbose=3, cv=2)
     
     return cv
-    
-    
 
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+
+# Random Forest Classifier
+def default_forest(X_train, X_test, y_train, y_test):
+    # pipeline with default Random Forest Classifier
+    pipeline = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', RandomForestClassifier())
+        ])
+    
+    # train the classifier
+    pipeline.fit(X_train, y_train)
+    
+    # test the classifier and calculate the results
+    y_pred = pipeline.predict(X_test)
+    results = classification_report(y_test, y_pred, output_dict=True)
+    results = pd.DataFrame(results).transpose()
+    
+    # return the classification report as a dataframe
+    return results
+
+# K-Nearest-Neighbors
+def default_knn(X_train, X_test, y_train, y_test):
+    # pipeline with default K-Nearest-Neighbors
+    pipeline = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', KNeighborsClassifier())
+        ])
+    
+    # train the classifier
+    pipeline.fit(X_train, y_train)
+    
+    # test the classifier and calculate the results
+    y_pred = pipeline.predict(X_test)
+    results = classification_report(y_test, y_pred, output_dict=True)
+    results = pd.DataFrame(results).transpose()
+    
+    # return the classification report as a dataframe
+    return results
+
+# Naive Bayes
+def default_nb(X_train, X_test, y_train, y_test):
+
+    # pipeline with default Naive Bayes
+    pipeline = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', GaussianNB())
+        ])
+    
+    # train the classifier
+    pipeline.fit(X_train, y_train)
+    
+    # test the classifier and calculate the results
+    y_pred = pipeline.predict(X_test)
+    results = classification_report(y_test, y_pred, output_dict=True)
+    results = pd.DataFrame(results).transpose()
+    
+    # return the classification report as a dataframe
+    return results
+
+# Support Vector Classification
+def default_nb(X_train, X_test, y_train, y_test):
+    # pipeline with default Support Vector Classification
+    svc_pipeline = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', SVC())
+        ])
+    
+    # train the classifier
+    pipeline.fit(X_train, y_train)
+    
+    # test the classifier and calculate the results
+    y_pred = pipeline.predict(X_test)
+    results = classification_report(y_test, y_pred, output_dict=True)
+    results = pd.DataFrame(results).transpose()
+    
+    # return the classification report as a dataframe
+    return results

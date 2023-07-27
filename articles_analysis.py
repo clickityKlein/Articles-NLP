@@ -69,22 +69,24 @@ plt.title('Minimum Word Count per Publisher')
 
 '''
 Model Creation
-(ONLY NEED TO ENCODE CATEGORICAL VARIABLES IF THEY'RE PART OF THE INDEPENDENT DATA)
 '''
 # load appropriate functions
-from articles_functions import tokenize, build_model_SVC, build_model_double_proc, build_model_forest
+from articles_functions import tokenize
 
 # split data into training and testing sets
 X = df['content']
 y = df['publication']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=21)
 
-# build model
-cv = build_model_forest()
+# before testing parameters, we'll take a look at a few different default classifiers
+# Random Forest Classifier
+results_rfc = default_forest(X_train, X_test, y_train, y_test)
 
-# train model
-cv.fit(X_train, y_train)
+# K-Nearest-Neighbors
+results_knn = default_knn(X_train, X_test, y_train, y_test)
 
+# Naive Bayes
+results_nb = default_nb(X_train, X_test, y_train, y_test)
 
-
-
+# Support Vector Classification
+results_svc = default_nb(X_train, X_test, y_train, y_test)
