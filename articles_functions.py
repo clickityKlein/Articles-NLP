@@ -44,10 +44,7 @@ Functions:
     - clean_data
 '''
 # function to load the initial dataset (assumes combined articles)
-def load_data(articles_filepaths = ['data/articles1.csv',
-                                    'data/articles2.csv',
-                                    'data/articles3.csv',
-                                    ]):
+def load_data(articles_filepath = 'data/articles_reduced.csv'):
     '''
     INPUT:
         - articles_filepaths: filepath to the articles csv data
