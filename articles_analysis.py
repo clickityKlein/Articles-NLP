@@ -55,6 +55,23 @@ plt.title('Maximum Word Count per Publisher')
 plt.barh(y = min_words.index, width = min_words)
 plt.title('Minimum Word Count per Publisher')
 
+# word count histograms
+# full set
+df.word_count.hist()
+plt.title('Histogram of Word Count - Full Set')
+plt.xlabel('Word Count')
+plt.ylabel('Article Count')
+# 6,000 word limit
+df[df.word_count<6000].word_count.hist()
+plt.title('Histogram of Word Count - 6,000 Word Limit')
+plt.xlabel('Word Count')
+plt.ylabel('Article Count')
+# 3,000 word limit
+df[df.word_count<3000].word_count.hist()
+plt.title('Histogram of Word Count - 3,000 Word Limit')
+plt.xlabel('Word Count')
+plt.ylabel('Article Count')
+
 
 '''
 Model Creation
@@ -150,3 +167,6 @@ plt.title('Random Forest Tuned')
 plt.bar(x = accs.keys(), height = accs.values())
 plt.xticks(rotation = 90)
 plt.title('Model Accuracies')
+
+# save models as pickle files
+
