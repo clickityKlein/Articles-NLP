@@ -170,91 +170,12 @@ def tokenize(text):
 
     return clean_tokens
 
-# svc bayessearch model build
-def build_model_SVC():
-    pipe = Pipeline([
-        ('vect', CountVectorizer(tokenizer=tokenize)),
-        ('tfidf', TfidfTransformer()),
-        ('svc', SVC()),
-        ])
-
-    # parameters
-    params = {
-        'C': (1e-6, 100.0, 'log-uniform'),
-        'gamma': (1e-6, 100.0, 'log-uniform'),
-        'degree': (1, 5),
-        'kernel': ['linear', 'poly', 'rbf', 'sigmoid']
-        }
-
-    # set cv
-    cv = RepeatedStratifiedKFold(n_splits=10,
-                                 n_repeats=3,
-                                 random_state=1)
-
-    # define evaluation
-    search = BayesSearchCV(
-        pipe,
-        search_spaces = params,
-        n_jobs = -1,
-        cv=cv
-        )
-    
-    return search
-
-# ada & gb bayessearch model build
-def build_model_double_proc():
-    ada_search = {
-        'model': [AdaBoostRegressor()],
-        'model__learning_rate': Real(0.005, 0.9, prior="log-uniform"),
-        'model__n_estimators': Integer(1, 1000),
-        'model__loss': Categorical(['linear', 'square', 'exponential'])
-    }
-    gb_search = {
-        'model': [GradientBoostingRegressor()],
-        'model__learning_rate': Real(0.005, 0.9, prior="log-uniform"),
-        'model__n_estimators': Integer(1, 1000),
-        'model__loss': Categorical(['ls', 'lad', 'quantile'])
-    }
-    
-    # pipeline
-    pipe = Pipeline([
-        ('vect', CountVectorizer(tokenizer=tokenize)),
-        ('tfidf', TfidfTransformer()),
-        ('model', GradientBoostingRegressor())
-        ])
-    
-    # bayessearchcv
-    opt = BayesSearchCV(
-        pipe,
-        [(ada_search, 100), (gb_search, 100)],
-        cv=5
-        )
-    
-    return opt
-
-# random forest classifier model build
-def build_model_forest():
-    # pipeline
-    pipeline = Pipeline([
-        ('vect', CountVectorizer(tokenizer=tokenize)),
-        ('tfidf', TfidfTransformer()),
-        ('clf', RandomForestClassifier())
-        ])
-    
-    # parameters
-    parameters = {
-        'clf__estimator__n_estimators': [5]
-        }
-    
-    # optimize
-    cv = GridSearchCV(pipeline, param_grid=parameters, n_jobs=-1, verbose=3, cv=2)
-    
-    return cv
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn.svm import SVC
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import LinearSVC
+from sklearn.ensemble import AdaBoostClassifier
 
 # Random Forest Classifier
 def default_forest(X_train, X_test, y_train, y_test):
@@ -303,7 +224,7 @@ def default_nb(X_train, X_test, y_train, y_test):
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
-        ('clf', GaussianNB())
+        ('clf', MultinomialNB())
         ])
     
     # train the classifier
@@ -318,12 +239,12 @@ def default_nb(X_train, X_test, y_train, y_test):
     return results
 
 # Support Vector Classification
-def default_nb(X_train, X_test, y_train, y_test):
+def default_svc(X_train, X_test, y_train, y_test):
     # pipeline with default Support Vector Classification
-    svc_pipeline = Pipeline([
+    pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
-        ('clf', SVC())
+        ('clf', LinearSVC())
         ])
     
     # train the classifier
@@ -336,3 +257,45 @@ def default_nb(X_train, X_test, y_train, y_test):
     
     # return the classification report as a dataframe
     return results
+
+# ADA Boost Classification
+def default_ada(X_train, X_test, y_train, y_test):
+    # pipeline with default Support Vector Classification
+    pipeline = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', AdaBoostClassifier())
+        ])
+    
+    # train the classifier
+    pipeline.fit(X_train, y_train)
+    
+    # test the classifier and calculate the results
+    y_pred = pipeline.predict(X_test)
+    results = classification_report(y_test, y_pred, output_dict=True)
+    results = pd.DataFrame(results).transpose()
+    
+    # return the classification report as a dataframe
+    return results
+
+'''
+Random Forest Classifier with parameters ran through GridSearchCV
+'''
+# random forest classifier model build
+def build_model_forest():
+    # pipeline
+    pipeline = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', RandomForestClassifier())
+        ])
+    
+    # parameters
+    parameters = {
+        'clf__max_depth': [1, 5, 10]
+        }
+    
+    # optimize
+    cv = GridSearchCV(pipeline, param_grid=parameters, n_jobs=1, verbose=3, cv=2)
+    
+    return cv
