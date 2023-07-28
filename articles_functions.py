@@ -161,6 +161,16 @@ def tokenize(text):
 
 # Random Forest Classifier
 def default_forest(X_train, X_test, y_train, y_test):
+    '''
+    INPUT:
+        - X_train: training split from dataset, article text
+        - X_test: testing split from dataset, article text
+        - y_train: training split from dataset, network name
+        - y_test: testing split from dataset, network name
+    
+    OUTPUT:
+        - results: DataFrame of the model's classification report
+    '''
     # pipeline with default Random Forest Classifier
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
@@ -181,6 +191,16 @@ def default_forest(X_train, X_test, y_train, y_test):
 
 # K-Nearest-Neighbors
 def default_knn(X_train, X_test, y_train, y_test):
+    '''
+    INPUT:
+        - X_train: training split from dataset, article text
+        - X_test: testing split from dataset, article text
+        - y_train: training split from dataset, network name
+        - y_test: testing split from dataset, network name
+    
+    OUTPUT:
+        - results: DataFrame of the model's classification report
+    '''
     # pipeline with default K-Nearest-Neighbors
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
@@ -201,7 +221,16 @@ def default_knn(X_train, X_test, y_train, y_test):
 
 # Naive Bayes
 def default_nb(X_train, X_test, y_train, y_test):
-
+    '''
+    INPUT:
+        - X_train: training split from dataset, article text
+        - X_test: testing split from dataset, article text
+        - y_train: training split from dataset, network name
+        - y_test: testing split from dataset, network name
+    
+    OUTPUT:
+        - results: DataFrame of the model's classification report
+    '''
     # pipeline with default Naive Bayes
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
@@ -222,6 +251,16 @@ def default_nb(X_train, X_test, y_train, y_test):
 
 # Support Vector Classification
 def default_svc(X_train, X_test, y_train, y_test):
+    '''
+    INPUT:
+        - X_train: training split from dataset, article text
+        - X_test: testing split from dataset, article text
+        - y_train: training split from dataset, network name
+        - y_test: testing split from dataset, network name
+    
+    OUTPUT:
+        - results: DataFrame of the model's classification report
+    '''
     # pipeline with default Support Vector Classification
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
@@ -242,6 +281,16 @@ def default_svc(X_train, X_test, y_train, y_test):
 
 # ADA Boost Classification
 def default_ada(X_train, X_test, y_train, y_test):
+    '''
+    INPUT:
+        - X_train: training split from dataset, article text
+        - X_test: testing split from dataset, article text
+        - y_train: training split from dataset, network name
+        - y_test: testing split from dataset, network name
+    
+    OUTPUT:
+        - results: DataFrame of the model's classification report
+    '''
     # pipeline with default Support Vector Classification
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
