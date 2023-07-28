@@ -135,7 +135,7 @@ to something like an ocean. In lieu of that information, no parts were removed f
 all of which were never restated with typos.
 - author: This datapoint had quite a few missing values. In the complete dataset (around 150,000 articles),
 there were about 11% of authors missing. Along with the missing values, sometimes the author would be 
-the publisher, an organizer, or consist of multiple authors. If it were more uniform, this could've had
+the publisher, an organization, or consist of multiple authors. If it were more uniform, this could've had
 more potential, however was ultimately dropped.
 - date: Given the data was somewhat cherry picked and not uniform, this column didn't provide much
 value and was subsequently dropped.
@@ -143,8 +143,8 @@ value and was subsequently dropped.
 - month Redundant with date, dropped.
 - url: High number of missing values, irrelevant information, dropped.
 - content: This is what we were training our model on, and thus had quite a bit of time
-spent on. We removed puncuation, extra and leading/trailing spaces. After this, we counted 
-the words (and tracked in the word_count column). There were quite a few articles whose content
+spent on. We removed punctuation, extra and leading/trailing spaces. After this, we counted 
+the words (tracked in the word_count column). There were quite a few articles whose content
 was either blank or was scraped incorrectly. An example of an incorrect scrape that occurred frequently
 was the scrape of "Advertisement". To account for this, we set a minimum word count of 30. Additionally,
 there was a single article with a word count in the 50,000's which ended up being the entire 
@@ -163,9 +163,10 @@ df = clean_data(df)
 ```
 
 **Implementation**
-After some exploration both statistically and visually (see Analysis section below), it was time to test models
-to test some classification models. The idea was to test a few different classifiers, and then run parameters through
-GridSearchCV of the best model.
+
+After some exploration both statistically and visually (see Analysis section below), we
+tested some classification models. The idea was to test a few different classifiers, and then run parameters through
+GridSearchCV for the best performing model.
 
 The general format of the default model testing was:
 ```
@@ -181,7 +182,7 @@ def default_classifier(X_train, X_test, y_train, y_test):
     OUTPUT:
         - results: DataFrame of the model's classification report
     '''
-    # pipeline with default K-Nearest-Neighbors
+    # pipeline with default Classifier
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
@@ -229,10 +230,77 @@ See results in the Analysis and Results sections.
 
 
 ## Analysis
-**Data Exploration**
+**Data Exploration & Visualization**
+```
+# number of articles per publisher
+# analysis
+publishers = df.publication.value_counts(ascending = True)
+# plotting
+plt.barh(y = publishers.index, width = publishers)
+plt.title('Number of Articles per Publisher')
+```
+![Artciles per Publisher](images/articles_per_publisher.png)
 
-**Data Visualization**
 
+```
+# word count statistics per publisher
+# analysis
+avg_words = df.groupby('publication')['word_count'].mean().sort_values(ascending = True)
+min_words = df.groupby('publication')['word_count'].min().sort_values(ascending = True)
+max_words = df.groupby('publication')['word_count'].max().sort_values(ascending = True)
+```
+
+
+```
+# plotting
+plt.barh(y = avg_words.index, width = avg_words)
+plt.title('Average Word Count per Publisher')
+```
+![Average Word Count per Publisher](images/avg_word_count_per_publisher.png)
+
+
+```
+plt.barh(y = max_words.index, width = max_words)
+plt.title('Maximum Word Count per Publisher')
+```
+![Maximum Word Count per Publisher](images/max_word_count_per_publisher.png)
+
+
+```
+plt.barh(y = min_words.index, width = min_words)
+plt.title('Minimum Word Count per Publisher')
+```
+![Minimum Word Count per Publisher](images/min_word_count_per_publisher.png)
+
+
+```
+# word count histograms
+# full set
+df.word_count.hist()
+plt.title('Histogram of Word Count - Full Set')
+plt.xlabel('Word Count')
+plt.ylabel('Article Count')
+```
+![Full Histogram](images/histogram_full.png)
+
+```
+# 6,000 word limit
+df[df.word_count<6000].word_count.hist()
+plt.title('Histogram of Word Count - 6,000 Word Limit')
+plt.xlabel('Word Count')
+plt.ylabel('Article Count')
+```
+![6,000 Limit Histogram](images/histogram_6000.png)
+
+
+```
+# 3,000 word limit
+df[df.word_count<3000].word_count.hist()
+plt.title('Histogram of Word Count - 3,000 Word Limit')
+plt.xlabel('Word Count')
+plt.ylabel('Article Count')
+```
+![3,000 Limit Histogram](images/histogram_3000.png)
 
 
 [Table of Contents](#table-of-contents)
