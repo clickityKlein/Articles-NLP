@@ -37,7 +37,7 @@ The following packages are required:
 **Overview**
 - Domain: News / Media
 - Origin: Initial Attempt, Original Problem & Solution 
-- Data: [Kaggle.](https://www.kaggle.com/datasets/snapcrack/all-the-news)
+- Data: [Kaggle](https://www.kaggle.com/datasets/snapcrack/all-the-news)
 
 **Statement**
 
@@ -94,6 +94,28 @@ through a GridSearchCV object
 
 
 ## Data Description
+The data used in this analysis was found on [Kaggle](https://www.kaggle.com/datasets/snapcrack/all-the-news).
+
+The author of the data used a BeautifulSoup webscraper to obtain articles and associated datapoints
+from several different sources. The data was uploaded in three datasets:
+- artices1.csv
+- artices2.csv
+- artices3.csv
+
+The datasets contains about 50,000 articles each, and have (potentially) the following columns:
+- ID
+- title
+- publication
+- author
+- date
+- year
+- month
+- url
+- content
+
+The methodology section ahead will discuss cleaning and combining of the datasets, however,
+the data used in the analysis was a combination of the three files reduced to a
+total of 10,000 articles.
 
 [Table of Contents](#table-of-contents)
 
@@ -101,12 +123,18 @@ through a GridSearchCV object
 ## Methodology
 **Data Preprocessing**
 
+
 **Implementation**
+
+[Table of Contents](#table-of-contents)
+
 
 ## Analysis
 **Data Exploration**
 
 **Data Visualization**
+
+[Table of Contents](#table-of-contents)
 
 
 ## Results
