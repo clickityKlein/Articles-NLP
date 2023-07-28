@@ -7,6 +7,7 @@ uses two main files:
 1. *articles_analysis.py*
 2. *articles_functions.py*
 
+**See also the medium article.**
 
 ## Table of Contents
 - [Libraries Used](#libraries-used)
@@ -34,15 +35,52 @@ The following packages are required:
 
 ## Project Definition
 **Overview**
+- Domain: News / Media
+- Origin: Initial Attempt, Original Problem & Solution 
+- Data: [Kaggle.](https://www.kaggle.com/datasets/snapcrack/all-the-news)
 
 **Statement**
+After cleaning and exploring the data via statistical and visual methods, attempt to
+create a classification model which will accurately predict publisher if given a news
+article.
+
+Without higher processing power, and a more equipt dataset, this will likely not be very
+accurate. Additionally, this only accounts for a small portion of the thousands of
+publishers and news networks, which means any article from outside the publishers in this
+dataset will result in an incorrect prediction.
 
 **Metrics**
+Our main measures of model performance will be:
+- *f1-score*
+- *accuracy*
+
+*Accuracy* is generally a good starting place, however *f1-score* has a slightly
+deeper and more complex meaning.
 
 [Table of Contents](#table-of-contents)
 
 
 ## Functions
+The following are descriptions of the functions provided in the *articles_functions.py*
+file.
+
+**Load and Clean Data**
+Functions:
+- *load_data*
+- *clean_words*
+- *variable_formatting*
+- *word_count*
+- *clean_data*
+    
+**Model Creation**
+Functions:
+- *tokenize*
+- *default_forest*
+- *default_knn*
+- *default_nb*
+- *default_svc*
+- *default_ada*
+- *build_model_forest*
 
 [Table of Contents](#table-of-contents)
 

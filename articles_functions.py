@@ -129,6 +129,15 @@ def clean_data(df):
 
 '''
 Model Creation
+
+Functions:
+    - tokenize
+    - default_forest
+    - default_knn
+    - default_nb
+    - default_svc
+    - default_ada
+    - build_model_forest
 '''
 
 # tokenize, remove stop words, and then lemmatize (for pipeline)
