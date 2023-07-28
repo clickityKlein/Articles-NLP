@@ -15,22 +15,11 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-
-from xgboost import XGBClassifier
-from skopt import BayesSearchCV
-from skopt.space import Integer
-from skopt.space import Real
-from skopt.space import Categorical
-
-from sklearn.ensemble import AdaBoostRegressor, GradientBoostingRegressor
-from sklearn.datasets import make_regression
-
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.multioutput import MultiOutputClassifier
-
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import RepeatedStratifiedKFold
-from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import LinearSVC
+from sklearn.ensemble import AdaBoostRegressor
 
 
 '''
