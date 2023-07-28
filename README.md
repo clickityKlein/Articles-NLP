@@ -122,9 +122,45 @@ total of 10,000 articles.
 
 ## Methodology
 **Data Preprocessing**
+The webscraper used to procure the dataset did pretty well, however there were some
+areas that needed help. We'll go through each column and describe what was found.
+- ID: A tracking number which really had no relevance, and was subsequently dropped.
+- title: This was trickier than it first appeared. Some of the titles had their publishers in their
+text, such as "title_text - publisher". Initially, the intent was to remove this and just have the
+title text. However, upon further inspection, some titles would reference counterpart publishers,
+or would have publisher's names in the title referencing something not related to the publisher.
+For example, the publisher "Atlantic" could be self-reference, a counterpart reference, or a reference
+to something like an ocean. In lieu of that information, no parts were removed from the tiles.
+- publication: This was probably the cleanest column of the dataset. It featured 15 publishers,
+all of which were never restated with typos.
+- author: This datapoint had quite a few missing values. In the complete dataset (around 150,000 articles),
+there were about 11% of authors missing. Along with the missing values, sometimes the author would be 
+the publisher, an organizer, or consist of multiple authors. If it were more uniform, this could've had
+more potential, however was ultimately dropped.
+- date: Given the data was somewhat cherry picked and not uniform, this column didn't provide much
+value and was subsequently dropped.
+- year: Redundant with date, dropped.
+- month Redundant with date, dropped.
+- url: High number of missing values, irrelevant information, dropped.
+- content: This is what we were training our model on, and thus had quite a bit of time
+spent on. We removed puncuation, extra and leading/trailing spaces. After this, we counted 
+the words (and tracked in the word_count column). There were quite a few articles whose content
+was either blank or was scraped incorrectly. An example of an incorrect scrape that occurred frequently
+was the scrape of "Advertisement". To account for this, we set a minimum word count of 30. Additionally,
+there was a single article with a word count in the 50,000's which ended up being the entire 
+James Comey testimony. With the next lowest having a word count in the 20,000's, we capped article
+length at a word count of 50,000.
 
+Due to size constraints in GitHub, and time/processor constraints with building an NLP model, the analysis
+and model were built off a subset of the combined dataset at 10,000 articles.
 
-**Implementation**
+In *articles_analysis*, all of the above is wittled down to the following:
+```
+# load data    
+df = load_data()
+# clean data
+df = clean_data(df)
+```
 
 [Table of Contents](#table-of-contents)
 
@@ -133,6 +169,8 @@ total of 10,000 articles.
 **Data Exploration**
 
 **Data Visualization**
+
+**Model Implementation**
 
 [Table of Contents](#table-of-contents)
 
