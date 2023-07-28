@@ -40,6 +40,7 @@ The following packages are required:
 - Data: [Kaggle.](https://www.kaggle.com/datasets/snapcrack/all-the-news)
 
 **Statement**
+
 After cleaning and exploring the data via statistical and visual methods, attempt to
 create a classification model which will accurately predict publisher if given a news
 article.
@@ -50,6 +51,7 @@ publishers and news networks, which means any article from outside the publisher
 dataset will result in an incorrect prediction.
 
 **Metrics**
+
 Our main measures of model performance will be:
 - *f1-score*
 - *accuracy*
@@ -65,22 +67,28 @@ The following are descriptions of the functions provided in the *articles_functi
 file.
 
 **Load and Clean Data**
+
 Functions:
-- *load_data*
-- *clean_words*
-- *variable_formatting*
-- *word_count*
-- *clean_data*
+- *load_data*: loads the combined and reduced dataset
+- *clean_words*: lowercase the characters, remove punctuation and tidy spaces
+- *variable_formatting*: format publisher column for use as variables
+- *word_count*: counts the number of words in a given string (used for articles)
+- *clean_data*: combines many of the above functions as well as removes unnecessary columns
     
 **Model Creation**
+
 Functions:
-- *tokenize*
-- *default_forest*
-- *default_knn*
-- *default_nb*
-- *default_svc*
-- *default_ada*
-- *build_model_forest*
+- *tokenize*: tokenizes text (i.e. each word becomes an element in a list), removes stop words,
+and then lemmatizes text (i.e. puts words in their base form)
+- *default_forest*: sklearn's RandomForestClassifier with all defaults, passed through
+a pipeline along with *tokenize* and a TfidfTransformer, and returns DataFrame
+containing the classification report
+- *default_knn*: sklearn's KNeighborsClassifier with all defaults...
+- *default_nb*: sklearn's MultinomialNB with all defaults...
+- *default_svc*: sklearn's LinearSVC with all defaults...
+- *default_ada*: sklearn's AdaBoostClassifier with all defaults...
+- *build_model_forest*: builds on the RandomForestClassifier by passing several parameters
+through a GridSearchCV object
 
 [Table of Contents](#table-of-contents)
 
