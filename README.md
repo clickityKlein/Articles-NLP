@@ -162,6 +162,69 @@ df = load_data()
 df = clean_data(df)
 ```
 
+**Implementation**
+After some exploration both statistically and visually (see Analysis section below), it was time to test models
+to test some classification models. The idea was to test a few different classifiers, and then run parameters through
+GridSearchCV of the best model.
+
+The general format of the default model testing was:
+```
+# Classifier
+def default_classifier(X_train, X_test, y_train, y_test):
+    '''
+    INPUT:
+        - X_train: training split from dataset, article text
+        - X_test: testing split from dataset, article text
+        - y_train: training split from dataset, network name
+        - y_test: testing split from dataset, network name
+    
+    OUTPUT:
+        - results: DataFrame of the model's classification report
+    '''
+    # pipeline with default K-Nearest-Neighbors
+    pipeline = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', Classifier())
+        ])
+    
+    # train the classifier
+    pipeline.fit(X_train, y_train)
+    
+    # test the classifier and calculate the results
+    y_pred = pipeline.predict(X_test)
+    results = classification_report(y_test, y_pred, output_dict=True)
+    results = pd.DataFrame(results).transpose()
+    
+    # return the classification report as a dataframe
+    return results
+```
+
+We tested several models, ultimately running the code in *articles_analysis*:
+```
+# split data into training and testing sets
+X = df['content']
+y = df['publication']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=21)
+
+# before testing parameters, we'll take a look at a few different default classifiers
+# Random Forest Classifier
+results_rfc = default_forest(X_train, X_test, y_train, y_test)
+
+# K-Nearest-Neighbors
+results_knn = default_knn(X_train, X_test, y_train, y_test)
+
+# Naive Bayes (requires dense matrix)
+results_nb = default_nb(X_train, X_test, y_train, y_test)
+
+# Linear Support Vector Classification (requires dense matrix)
+results_svc = default_nb(X_train, X_test, y_train, y_test)
+
+# ADA Boost
+results_ada = default_ada(X_train, X_test, y_train, y_test)
+```
+See results in the Analysis and Results sections.
+
 [Table of Contents](#table-of-contents)
 
 
@@ -170,7 +233,7 @@ df = clean_data(df)
 
 **Data Visualization**
 
-**Model Implementation**
+
 
 [Table of Contents](#table-of-contents)
 
