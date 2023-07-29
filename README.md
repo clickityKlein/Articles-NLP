@@ -122,27 +122,28 @@ total of 10,000 articles.
 
 ## Methodology
 **Data Preprocessing**
+
 The webscraper used to procure the dataset did pretty well, however there were some
 areas that needed help. We'll go through each column and describe what was found.
-- ID: A tracking number which really had no relevance, and was subsequently dropped.
-- title: This was trickier than it first appeared. Some of the titles had their publishers in their
+- **ID**: A tracking number which really had no relevance, and was subsequently dropped.
+- **title**: This was trickier than it first appeared. Some of the titles had their publishers in their
 text, such as "title_text - publisher". Initially, the intent was to remove this and just have the
 title text. However, upon further inspection, some titles would reference counterpart publishers,
 or would have publisher's names in the title referencing something not related to the publisher.
 For example, the publisher "Atlantic" could be self-reference, a counterpart reference, or a reference
 to something like an ocean. In lieu of that information, no parts were removed from the tiles.
-- publication: This was probably the cleanest column of the dataset. It featured 15 publishers,
+- **publication**: This was probably the cleanest column of the dataset. It featured 15 publishers,
 all of which were never restated with typos.
-- author: This datapoint had quite a few missing values. In the complete dataset (around 150,000 articles),
+- **author**: This datapoint had quite a few missing values. In the complete dataset (around 150,000 articles),
 there were about 11% of authors missing. Along with the missing values, sometimes the author would be 
 the publisher, an organization, or consist of multiple authors. If it were more uniform, this could've had
 more potential, however was ultimately dropped.
-- date: Given the data was somewhat cherry picked and not uniform, this column didn't provide much
+- **date**: Given the data was somewhat cherry picked and not uniform, this column didn't provide much
 value and was subsequently dropped.
-- year: Redundant with date, dropped.
-- month Redundant with date, dropped.
-- url: High number of missing values, irrelevant information, dropped.
-- content: This is what we were training our model on, and thus had quite a bit of time
+- **year**: Redundant with date, dropped.
+- **month**: Redundant with date, dropped.
+- **url**: High number of missing values, irrelevant information, dropped.
+- **content**: This is what we were training our model on, and thus had quite a bit of time
 spent on. We removed punctuation, extra and leading/trailing spaces. After this, we counted 
 the words (tracked in the word_count column). There were quite a few articles whose content
 was either blank or was scraped incorrectly. An example of an incorrect scrape that occurred frequently
@@ -326,6 +327,7 @@ a role in prediction among publisher.
 
 ## Results
 **Model Evaluation & Validation**
+
 After cleaning and exploring the data, we're ready to test some classification models.
 
 The reiterate, the idea was to test a few classification models with their default parameters,
@@ -359,6 +361,7 @@ From the classification reports, here are the f1-scores for each model visualize
 
 
 **Justification**
+
 Following the f1-scores and accuracies, the Random Forest Classifier is the obvious winner.
 
 In lieu of this, utilizing GridSearchCV, we tried to improve the Random Forest Classifier by
