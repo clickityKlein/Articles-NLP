@@ -7,7 +7,7 @@ uses two main files:
 1. *articles_analysis.py*
 2. *articles_functions.py*
 
-**See also the medium article.**
+**See also the [medium article](https://medium.com/@carlj.klein/publisher-prediction-natural-language-processing-nlp-with-news-articles-5e5dffe8c316).**
 
 ## Table of Contents
 - [Libraries Used](#libraries-used)
