@@ -262,7 +262,6 @@ plt.title('Average Word Count per Publisher')
 ```
 ![Average Word Count per Publisher](images/avg_word_count_per_publisher.png)
 
-*The average word count in articles for each publisher.*
 
 ```
 plt.barh(y = max_words.index, width = max_words)
@@ -270,7 +269,6 @@ plt.title('Maximum Word Count per Publisher')
 ```
 ![Maximum Word Count per Publisher](images/max_word_count_per_publisher.png)
 
-*The maximum word count in articles for each publisher.*
 
 ```
 plt.barh(y = min_words.index, width = min_words)
@@ -278,7 +276,6 @@ plt.title('Minimum Word Count per Publisher')
 ```
 ![Minimum Word Count per Publisher](images/min_word_count_per_publisher.png)
 
-*The minimum word count in articles for each publisher.*
 
 Note that the order of the publishers changes between each of these images. Additionally,
 it's important to draw attention to how a few of the publisher's minimum word count far exceeded
@@ -294,7 +291,6 @@ plt.ylabel('Article Count')
 ```
 ![Full Histogram](images/histogram_full.png)
 
-*Histogram of the word count from the entire dataset.*
 
 ```
 # 6,000 word limit
@@ -305,7 +301,6 @@ plt.ylabel('Article Count')
 ```
 ![6,000 Limit Histogram](images/histogram_6000.png)
 
-*Histogram of the word count from articles less than 6,000 words.*
 
 ```
 # 3,000 word limit
@@ -316,7 +311,6 @@ plt.ylabel('Article Count')
 ```
 ![3,000 Limit Histogram](images/histogram_3000.png)
 
-*Histogram of the word count from articles less than 3,000 words.*
 
 In each progressive histogram, we reduce the x-axis limits to focus in on where the
 majority of data is. We can see the histogram of the word counts has a significant right skew,
@@ -350,23 +344,18 @@ From the classification reports, here are the f1-scores for each model visualize
 
 ![f1-score-forest-default](images/random_forest_default_f1.png)
 
-*f1-score for the random forest classifier (default)*
 
 ![f1-score-knn](images/knn_default_f1.png)
 
-*f1-score for the k-nn classifier (default)*
 
 ![f1-score-nb](images/naive_bayes_default_f1.png)
 
-*f1-score for the naive bayes classifier (default)*
 
 ![f1-score-svc](images/support_vector_default_f1.png)
 
-*f1-score for the support vector classifier (default)*
 
 ![f1-score-ada](images/ada_boost_default_f1.png)
 
-*f1-score for the ada boost classifier (default)*
 
 **Justification**
 Following the f1-scores and accuracies, the Random Forest Classifier is the obvious winner.
@@ -398,13 +387,11 @@ def build_model_forest():
 Surprisingly, the result was worse off than default parameters:
 ![f1-score-forest-tuned](images/random_forest_tuned_f1.png)
 
-*f1-score for the random forest classifier (tuned)*
 
 
 In conclusion, the accuracies across every model:
 ![Model Accuracies](images/model_accuracies.png)
 
-*The accuracies across the models*
 
 [Table of Contents](#table-of-contents)
 
