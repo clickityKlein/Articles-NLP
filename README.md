@@ -240,8 +240,9 @@ publishers = df.publication.value_counts(ascending = True)
 plt.barh(y = publishers.index, width = publishers)
 plt.title('Number of Articles per Publisher')
 ```
+
 ![Artciles per Publisher](images/articles_per_publisher.png)
-*The total number of articles per publisher.*
+
 
 Something to note about this are the large differences in the amount of articles between
 the publishers. Unfortunately, the data coulnd't be scraped in an evenly distributed manner.
@@ -385,13 +386,13 @@ def build_model_forest():
     return cv
 ```
 Surprisingly, the result was worse off than default parameters:
+
 ![f1-score-forest-tuned](images/random_forest_tuned_f1.png)
 
 
-
 In conclusion, the accuracies across every model:
-![Model Accuracies](images/model_accuracies.png)
 
+![Model Accuracies](images/model_accuracies.png)
 
 [Table of Contents](#table-of-contents)
 
