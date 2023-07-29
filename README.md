@@ -261,6 +261,7 @@ plt.barh(y = avg_words.index, width = avg_words)
 plt.title('Average Word Count per Publisher')
 ```
 ![Average Word Count per Publisher](images/avg_word_count_per_publisher.png)
+
 *The average word count in articles for each publisher.*
 
 ```
@@ -268,6 +269,7 @@ plt.barh(y = max_words.index, width = max_words)
 plt.title('Maximum Word Count per Publisher')
 ```
 ![Maximum Word Count per Publisher](images/max_word_count_per_publisher.png)
+
 *The maximum word count in articles for each publisher.*
 
 ```
@@ -275,6 +277,7 @@ plt.barh(y = min_words.index, width = min_words)
 plt.title('Minimum Word Count per Publisher')
 ```
 ![Minimum Word Count per Publisher](images/min_word_count_per_publisher.png)
+
 *The minimum word count in articles for each publisher.*
 
 Note that the order of the publishers changes between each of these images. Additionally,
@@ -290,6 +293,7 @@ plt.xlabel('Word Count')
 plt.ylabel('Article Count')
 ```
 ![Full Histogram](images/histogram_full.png)
+
 *Histogram of the word count from the entire dataset.*
 
 ```
@@ -300,6 +304,7 @@ plt.xlabel('Word Count')
 plt.ylabel('Article Count')
 ```
 ![6,000 Limit Histogram](images/histogram_6000.png)
+
 *Histogram of the word count from articles less than 6,000 words.*
 
 ```
@@ -310,6 +315,7 @@ plt.xlabel('Word Count')
 plt.ylabel('Article Count')
 ```
 ![3,000 Limit Histogram](images/histogram_3000.png)
+
 *Histogram of the word count from articles less than 3,000 words.*
 
 In each progressive histogram, we reduce the x-axis limits to focus in on where the
@@ -325,8 +331,77 @@ a role in prediction among publisher.
 
 ## Results
 **Model Evaluation & Validation**
+After cleaning and exploring the data, we're ready to test some classification models.
+
+The reiterate, the idea was to test a few classification models with their default parameters,
+and then take the most favorable model to test further parameters.
+
+The following models were tested:
+- *default_forest*
+- *default_knn*
+- *default_nb*
+- *default_svc*
+- *default_ada*
+
+We followed the f1-score and accuracy through the testing.
+
+Starting with the accuracies:
+![Model Accuracies](images/model accuracies.png)
+
+*The accuracies across the models*
+
+And then the f1-scores:
+![f1-score-forest-default](images/random_forest_default_f1.png)
+
+*f1-score for the random forest classifier (default)*
+
+![f1-score-knn](images/knn_default_f1.png)
+
+*f1-score for the k-nn classifier (default)*
+
+![f1-score-nb](images/naive_bayes_default_f1.png)
+
+*f1-score for the naive bayes classifier (default)*
+
+![f1-score-svc](images/support_vector_default_f1.png)
+
+*f1-score for the support vector classifier (default)*
+
+![f1-score-ada](images/ada_boost_default_f1.png)
+
+*f1-score for the ada boost classifier (default)*
 
 **Justification**
+Following the f1-scores and accuracies, the Random Forest Classifier is the obvious winner.
+
+In lieu of this, utilizing GridSearchCV, we tried to improve the Random Forest Classifier by
+implementing and testing more parameters.
+
+Unfortunately, due to the amount of time it takes to test these parameters, only a few instances
+of "max_depth" were tested:
+```
+def build_model_forest():
+    # pipeline
+    pipeline = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', RandomForestClassifier())
+        ])
+    
+    # parameters
+    parameters = {
+        'clf__max_depth': [1, 5, 10]
+        }
+    
+    # optimize
+    cv = GridSearchCV(pipeline, param_grid=parameters, n_jobs=1, verbose=3, cv=2)
+    
+    return cv
+```
+Surprisingly, the result was worse off than default parameters:
+![f1-score-forest-tuned](images/random_forest_tuned_f1.png)
+
+*f1-score for the random forest classifier (tuned)*
 
 [Table of Contents](#table-of-contents)
 
