@@ -346,7 +346,7 @@ The following models were tested:
 We followed the f1-score and accuracy through the testing.
 
 Starting with the accuracies:
-![Model Accuracies](images/model accuracies.png)
+![Model Accuracies](images/model_accuracies.png)
 
 *The accuracies across the models*
 
@@ -408,7 +408,25 @@ Surprisingly, the result was worse off than default parameters:
 
 ## Conclusion
 **Reflection**
+Overall, we were able to successfully clean and analyze a dataset surrounding our goal. After testing
+several models and parameters, there was a "best" model built. The f1-scores and accuracy were not
+ideal, however, the framework to continue to improve this model has been created!
 
-**Improvement**
+**Improvements**
+When it comes to potential improvements of this analysis and model, at the top of the list is obviously
+creating more accurate predictions. A starting point would be to perform a more robust parameter search.
+Given the proper hardware, it would be great to test the entire dataset (~150,000 articles) across not only
+each of the classifiers, but a grid search of parameters for each of the classifiers as well.
+
+Unfortunately, the instance of testing just the 3 max_depth parameters for the Random Forest Classifier
+on less than 10,000 rows of data took about 2 hours on the machine it was performed on. Maybe another machine is
+better equipt to take on the challenge!
+
+Aside from processor power, a few other areas of improvement would be:
+- Scraping program: improve on the author collection, add more publishers, location origins, etc.
+- Add a category datapoint: it's also not too plausible to create a model that could guess a publisher
+we don't have any data for (there are thousands more than the 15 in this analysis), so a suggested
+new datapoint would be category. Even within publishers, a sports author is going to
+produce vastly (assumed) different patterns than a political writer.
 
 [Table of Contents](#table-of-contents)
