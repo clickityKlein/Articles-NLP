@@ -231,6 +231,7 @@ See results in the Analysis and Results sections.
 
 ## Analysis
 **Data Exploration & Visualization**
+
 ```
 # number of articles per publisher
 # analysis
@@ -240,7 +241,11 @@ plt.barh(y = publishers.index, width = publishers)
 plt.title('Number of Articles per Publisher')
 ```
 ![Artciles per Publisher](images/articles_per_publisher.png)
+*The total number of articles per publisher.*
 
+Something to note about this are the large differences in the amount of articles between
+the publishers. Unfortunately, the data coulnd't be scraped in an evenly distributed manner.
+Would this skew the results?
 
 ```
 # word count statistics per publisher
@@ -250,28 +255,31 @@ min_words = df.groupby('publication')['word_count'].min().sort_values(ascending 
 max_words = df.groupby('publication')['word_count'].max().sort_values(ascending = True)
 ```
 
-
 ```
 # plotting
 plt.barh(y = avg_words.index, width = avg_words)
 plt.title('Average Word Count per Publisher')
 ```
 ![Average Word Count per Publisher](images/avg_word_count_per_publisher.png)
-
+*The average word count in articles for each publisher.*
 
 ```
 plt.barh(y = max_words.index, width = max_words)
 plt.title('Maximum Word Count per Publisher')
 ```
 ![Maximum Word Count per Publisher](images/max_word_count_per_publisher.png)
-
+*The maximum word count in articles for each publisher.*
 
 ```
 plt.barh(y = min_words.index, width = min_words)
 plt.title('Minimum Word Count per Publisher')
 ```
 ![Minimum Word Count per Publisher](images/min_word_count_per_publisher.png)
+*The minimum word count in articles for each publisher.*
 
+Note that the order of the publishers changes between each of these images. Additionally,
+it's important to draw attention to how a few of the publisher's minimum word count far exceeded
+the others. Could article length play a deterministic role in the model?
 
 ```
 # word count histograms
@@ -282,6 +290,7 @@ plt.xlabel('Word Count')
 plt.ylabel('Article Count')
 ```
 ![Full Histogram](images/histogram_full.png)
+*Histogram of the word count from the entire dataset.*
 
 ```
 # 6,000 word limit
@@ -291,7 +300,7 @@ plt.xlabel('Word Count')
 plt.ylabel('Article Count')
 ```
 ![6,000 Limit Histogram](images/histogram_6000.png)
-
+*Histogram of the word count from articles less than 6,000 words.*
 
 ```
 # 3,000 word limit
@@ -301,7 +310,15 @@ plt.xlabel('Word Count')
 plt.ylabel('Article Count')
 ```
 ![3,000 Limit Histogram](images/histogram_3000.png)
+*Histogram of the word count from articles less than 3,000 words.*
 
+In each progressive histogram, we reduce the x-axis limits to focus in on where the
+majority of data is. We can see the histogram of the word counts has a significant right skew,
+with an average right around 500 words.
+
+
+This starts to give us an idea of how number of articles and word counts potentially play
+a role in prediction among publisher.
 
 [Table of Contents](#table-of-contents)
 
