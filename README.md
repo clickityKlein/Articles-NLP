@@ -343,14 +343,11 @@ The following models were tested:
 - *default_svc*
 - *default_ada*
 
+
 We followed the f1-score and accuracy through the testing.
 
-Starting with the accuracies:
-![Model Accuracies](images/model_accuracies.png)
+From the classification reports, here are the f1-scores for each model visualized:
 
-*The accuracies across the models*
-
-And then the f1-scores:
 ![f1-score-forest-default](images/random_forest_default_f1.png)
 
 *f1-score for the random forest classifier (default)*
@@ -403,16 +400,24 @@ Surprisingly, the result was worse off than default parameters:
 
 *f1-score for the random forest classifier (tuned)*
 
+
+In conclusion, the accuracies across every model:
+![Model Accuracies](images/model_accuracies.png)
+
+*The accuracies across the models*
+
 [Table of Contents](#table-of-contents)
 
 
 ## Conclusion
 **Reflection**
+
 Overall, we were able to successfully clean and analyze a dataset surrounding our goal. After testing
 several models and parameters, there was a "best" model built. The f1-scores and accuracy were not
 ideal, however, the framework to continue to improve this model has been created!
 
 **Improvements**
+
 When it comes to potential improvements of this analysis and model, at the top of the list is obviously
 creating more accurate predictions. A starting point would be to perform a more robust parameter search.
 Given the proper hardware, it would be great to test the entire dataset (~150,000 articles) across not only
