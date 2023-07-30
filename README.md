@@ -11,6 +11,7 @@ uses two main files:
 
 ## Table of Contents
 - [Libraries Used](#libraries-used)
+- [File Descriptions](#file-descriptions)
 - [Project Definition](#project-definition)
 - [Functions](#functions)
 - [Data Description](#data-description)
@@ -18,6 +19,7 @@ uses two main files:
 - [Analysis](#analysis)
 - [Results](#results)
 - [Conclusion](#conclusion)
+- [Acknowledgements](#acknowledgements)
 
 
 ## Libraries Used
@@ -28,6 +30,19 @@ The following packages are required:
 - nltk
 - re
 - sklearn
+
+[Table of Contents](#table-of-contents)
+
+
+## File Descriptions
+The following files are found in this repository:
+- **articles_reduced.csv**: File containing the data used in the analysis, which is a subset of the
+combined files from Kaggle.
+- **images**: Folder which houses the explanatory visualizations as well as visual extras for the Medium article.
+- **.gitignore**: File specifying which files to ignore in uploading from local repository.
+- **README.md**: README file to create the README in this repository.
+- **articles_analysis.py**: Python file for bulk of the analysis: loading, cleaning, creating visuals, and creating models.
+- **articles_functions.py**: Python file containing the functions used in **articles_analysis.py**.
 
 
 [Table of Contents](#table-of-contents)
@@ -424,5 +439,12 @@ Aside from processor power, a few other areas of improvement would be:
 we don't have any data for (there are thousands more than the 15 in this analysis), so a suggested
 new datapoint would be category. Even within publishers, a sports author is going to
 produce vastly (assumed) different patterns than a political writer.
+
+[Table of Contents](#table-of-contents)
+
+
+## Acknowledgements
+- [Kaggle](https://www.kaggle.com/datasets/snapcrack/all-the-news) Dataset
+- [Medium](https://medium.com/@carlj.klein/publisher-prediction-natural-language-processing-nlp-with-news-articles-5e5dffe8c316) Article
 
 [Table of Contents](#table-of-contents)
